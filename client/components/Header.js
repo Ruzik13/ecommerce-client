@@ -44,9 +44,9 @@ export default function Header(){
                 <Wrapper>
                     <Logo href={"/"}>Ecommerce</Logo>
                     <StyledNav>
-                        <NavLink href={"/"}>Каталог</NavLink>
-                        <NavLink href={"/products"}>Категории</NavLink>
-                        <NavLink href={"/categories"}>Профиль</NavLink>
+                        <NavLink href={"/"}>Главная</NavLink>
+                        <NavLink href={"/products"}>Каталог</NavLink>
+                        <NavLink href={"/profile"}>Профиль</NavLink>
                         <NavLink href={"/cart"}>Корзина ({cartProducts.length>0 ? cartProducts.length : 0})</NavLink>
                     </StyledNav>
                 </Wrapper>

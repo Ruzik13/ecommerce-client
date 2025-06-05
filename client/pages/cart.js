@@ -5,12 +5,20 @@ import Button from "@/components/Button";
 import { useContext, useState, useEffect } from "react";
 import { CartContext } from "@/components/CartContext";
 import Table from "@/components/Table";
+import Input from "@/components/Input";
+
+//Корзина не очищается, исправить
 
 const ColumnsWrapper = styled.div`
     margin-top: 100px;
     display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
+    grid-template-columns: 1fr;
     gap: 40px;
+    color: #fff;
+
+    @media screen and (min-width: 768px){
+        grid-template-columns: 1.3fr .7fr;
+    }
 `;
 
 const Box = styled.div`
@@ -27,6 +35,7 @@ const ProductInfoCell = styled.td`
 const ProductImageBox = styled.div`
   width: 100px;
   height: 100px;
+  margin-bottom: 4px;
   padding: 8px;
   border-radius: 12px;
   background-color: #fff;
@@ -45,9 +54,19 @@ const QuantityLabel = styled.span`
   padding: 0 4px;
 `;
 
+const CityHolder = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
   const [products, setProducts] = useState([]);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');
+  const [postal, setPostal] = useState('');
+  const [address, setAddress] = useState('');
 
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -74,14 +93,21 @@ export default function CartPage() {
     } catch (error) {
       console.error('Ошибка при загрузке товаров:', error);
     }
-  }
+  };
+
+  const total = products.reduce((sum, product)=>{
+    const quantity = cartProducts.filter(id=>id===product.id).length;
+    return sum + (product.price * quantity);
+
+  }, 0)
+
 
   function increaseProduct(id){
     addProduct(id);
-  }
+  };
   function decreaseProduct(id){
     removeProduct(id);
-  }
+  };
 
   return (
     <>
@@ -99,7 +125,7 @@ export default function CartPage() {
                 <tr>
                   <th>Товар</th>
                   <th>Количество</th>
-                  <th>Цена  </th>
+                  <th>Цена</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,16 +147,54 @@ export default function CartPage() {
                         <td>{cartProducts.filter(id=> id===product.id).length * product.price}₽</td>
                       </tr>
                     ))}
+                    <tr>
+                      <td />
+                      <td />
+                      <td><h3>{total}₽</h3></td>
+                    </tr>
               </tbody>
             </Table>
             )}
             </Box>
             {!!cartProducts?.length &&(
               <Box>
-                <h2>Информация о заказе</h2>
-                  <input type="text" placeholder="Адрес:"/>
-                  <input type="text" placeholder="Адрес 2:"/>
-                  <Button primary={1} block={1}>Перейти к оформлению</Button>
+                <form method="post" action="/api/checkout">
+                  <h2>Информация о заказе</h2>
+
+                  <Input type="text" 
+                  placeholder="Имя:" 
+                  value={name} 
+                  name="name"
+                  onChange={e=>setName(e.target.value)}/>
+
+                  <Input type="text" 
+                  placeholder="Email:" 
+                  value={email}
+                  name="email"
+                  onChange={e=>setEmail(e.target.value)}/>
+
+                  <CityHolder>
+                    <Input type="text" 
+                    placeholder="Город:"
+                    value={city}
+                    name="city"
+                    onChange={e=>setCity(e.target.value)}/>
+
+                    <Input type="text" 
+                    placeholder="Индекс:" 
+                    value={postal}
+                    name="postal"
+                    onChange={e=>setPostal(e.target.value)}/>
+                  </CityHolder>
+
+                  <Input type="text" 
+                  placeholder="Адрес:" 
+                  value={address}
+                  name="address"
+                  onChange={e=>setAddress(e.target.value)}/>
+
+                  <Button primary={1} block={1} >Перейти к оформлению</Button>
+                </form>
               </Box>
           )}
         </ColumnsWrapper>

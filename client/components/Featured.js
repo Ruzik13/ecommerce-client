@@ -9,7 +9,7 @@ const Bg = styled.div`
     color: #fff;
     background-color:  #2c2c2c;
     padding: 40px 0px;
-    margin: 
+    margin-top: 60px;
 `;
 
 const ColumnsWrapper = styled.div`
