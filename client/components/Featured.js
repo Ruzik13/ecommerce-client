@@ -62,7 +62,7 @@ export default function Featured(product){
                             <Title>Кабинет звука</Title>
                             <Desc>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt, ut nesciunt. Natus impedit qui praesentium, laudantium ipsam facere consequatur deserunt accusamus harum tenetur corrupti obcaecati omnis! Quisquam error dolore fugiat.</Desc>
                             <BtnWrapper>
-                                <ButtonLink href={"/product/"+product._id} white={1} outline={1} size={"l"} onClick={addFeaturedToCart}>Подробнее</ButtonLink>
+                                <ButtonLink href={"/product/"+product._id} white outline size={"l"} onClick={addFeaturedToCart}>Подробнее</ButtonLink>
                                 <Button primary size={"l"}>
                                     В корзину
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">

@@ -38,7 +38,7 @@ const StyledLink = styled(Link)`
 `;
 const StyledSpan = styled.span`
     margin-top: 12px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #fff;
     font-weight: light;
 `;
@@ -48,7 +48,7 @@ const ErrorMessage = styled.span`
     font-size: 0.7rem;
 `;
 
-export default function LoginForm(){
+export default function RegisterForm(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -59,18 +59,17 @@ export default function LoginForm(){
         setError('');
 
         try{
-            const response =  await fetch('http://localhost:3000/api/login',{
+            const response =  await fetch('/api/login',{
                 method: 'POST',
-                header:{
+                headers:{
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({email, password}),
             })
+            const data = await response.json();
             if (!response.ok){
-                const data = await response.json();
-                throw new Error(data.message || 'Вход в профиль провалена');
+                throw new Error(data.message || 'Аутентификация провалена');
             }
-
             router.push('/profile');
         }catch(error){
             setError(error.message);
@@ -81,11 +80,11 @@ export default function LoginForm(){
         <FormWrapper>
             <StyledForm onSubmit={handleSubmit}>
                 <Title>Вход</Title>
-                <Input placeholder = {'Email:'} onChange = {(e)=>setEmail(e.target.value)}/>
-                <Input type='password' placeholder = {'Пароль:'} onChange = {(e)=>setPassword(e.target.value)}/>
-                <ErrorMessage>{error}</ErrorMessage>
+                    <Input placeholder = {'Email:'} value={email} onChange = {(e)=>setEmail(e.target.value)}/>
+                    <Input type='password' value={password} placeholder = {'Пароль:'} onChange = {(e)=>setPassword(e.target.value)}/>
+                    <ErrorMessage>{error}</ErrorMessage>
                 <Button primary>Войти</Button>
-                <StyledSpan>Нет профиля? <StyledLink href={'/register'}>Создать</StyledLink></StyledSpan>
+                <StyledSpan>Нет профиля? <StyledLink href={'/login'}>Создать</StyledLink></StyledSpan>
             </StyledForm>
         </FormWrapper>
     )

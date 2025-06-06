@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.setHeader('Allow', ['POST'])
              .status(405)
-             .json({ message: 'Method not allowed' });
+             .json({ message: 'Метод не разрешен' });
   }
 
   try {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         typeof email !== 'string' || 
         typeof password !== 'string') {
       return res.status(400).json({ 
-        message: 'Valid email and password are required' 
+        message: 'Необходимо ввести email и пароль' 
       });
     }
 
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
     // Унифицированное сообщение об ошибке для безопасности
     if (!user) {
       return res.status(401).json({ 
-        message: 'Invalid credentials' 
+        message: 'Неверный email или пароль' 
       });
     }
 
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
     if (!isPasswordValid) {
       return res.status(401).json({ 
-        message: 'Invalid credentials' 
+        message: 'Неверный email или пароль' 
       });
     }
 
