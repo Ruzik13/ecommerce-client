@@ -84,7 +84,7 @@ export default function RegisterForm(){
                     <Input type='password' value={password} placeholder = {'Пароль:'} onChange = {(e)=>setPassword(e.target.value)}/>
                     <ErrorMessage>{error}</ErrorMessage>
                 <Button primary>Войти</Button>
-                <StyledSpan>Нет профиля? <StyledLink href={'/login'}>Создать</StyledLink></StyledSpan>
+                <StyledSpan>Нет профиля? <StyledLink href={'/register'}>Создать</StyledLink></StyledSpan>
             </StyledForm>
         </FormWrapper>
     )
